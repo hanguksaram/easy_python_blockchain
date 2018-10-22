@@ -1,1 +1,5 @@
 .vscode
+__pycache__/
+blockchain.txt
+demo.txt
+files.py
