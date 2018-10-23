@@ -5,10 +5,11 @@ import json
 import pickle
 
 # Import two functions from our hash_util.py file. Omit the ".py" in the import
-from hash_util import hash_block
+from utils.hash_util import hash_block
+from utils.verification import Verification
 from block import Block
 from transaction import Transaction
-from verification import Verification
+
 
 MINING_REWARD = 10
 
@@ -23,7 +24,7 @@ class Blockchain:
 # The reward we give to miners (for creating a new block)
     @property
     def chain(self):
-        self.__chain[:]
+        return self.__chain[:]
 
     @chain.setter
     def chain(self, val):
@@ -146,6 +147,8 @@ class Blockchain:
         #     'recipient': recipient,
         #     'amount': amount
         # }
+        if self.hosting_node == None:
+            return False
         transaction = Transaction(sender, recipient, amount)
         if Verification.verify_transaction(transaction, self.get_balance):
             self.__open_transactions.append(transaction)
@@ -156,6 +159,8 @@ class Blockchain:
     def mine_block(self):
         """Create a new block and add open transactions to it."""
         # Fetch the currently last block of the blockchain
+        if self.hosting_node == None:
+            return False
         last_block = self.__chain[-1]
         # Hash the last block (=> to be able to compare it to the stored hash value)
         hashed_block = hash_block(last_block)
