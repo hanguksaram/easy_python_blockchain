@@ -99,7 +99,7 @@
                     axios.get('/nodes')
                         .then(function(response){
                             vm.success = 'Fetched nodes successfully'
-                            vm.nodes = response.data.message
+                            vm.nodes = response.data.all_nodes
                         }).catch(function(error){
                             vm.success = null,
                             vm.error = error.response.data.message
